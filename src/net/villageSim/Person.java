@@ -6,6 +6,7 @@ public class Person {
     boolean isDead;
     boolean hasSword;
     boolean hasShield;
+    boolean turnTaken;
 
     public Person(String name, boolean hasSword, boolean hasShield) {
         this.name = name;
@@ -13,6 +14,7 @@ public class Person {
         this.health = 100;
         this.hasSword = hasSword;
         this.hasShield = hasShield;
+        this.turnTaken = false;
     }
 
     public void print() {

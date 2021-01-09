@@ -4,7 +4,8 @@ import java.util.List;
 
 public class BlackSmith extends Building {
 
-    public BlackSmith(String name) {
+    public BlackSmith() {
+        this.turnTaken = false;
     }
 
     public void giveShield(Person p) {

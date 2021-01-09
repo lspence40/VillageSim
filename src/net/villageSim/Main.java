@@ -25,7 +25,9 @@ public class Main {
         theShire.arrive(bob);
 
         for(int i = 0; i < theShire.people.size(); i ++) {
-            askPlayer(theShire.people.get(i).name);
+            if(!theShire.people.get(i).turnTaken) {
+                askPlayer(theShire.people.get(i).name);
+            }
         }
 
 //        theShire.getsRaided(10);
@@ -38,18 +40,24 @@ public class Main {
         Scanner input = new Scanner(System.in);
 
         System.out.println("what would you like " + name + " to do?");
-        String answer = input.nextLine();
-        Command command = new Command(answer);
+        String[] answer = input.nextLine().split(" ");
 
-        if("build".equals(command.action)) {
-            if("house".equals(command.noun)) {
+        if("build".equals(answer[0])) {
+            if("house".equals(answer[1])) {
                 map.add(new House("house" + map.size(), new ArrayList<>()));
-            } else if("blacksmith".equals(command.noun)) {
-                map.add(new BlackSmith("new blacksmith"));
+            } else if("blacksmith".equals(answer[1])) {
+                map.add(new BlackSmith());
             }
 
-        } else if("equip".equals(command.action)) {
+        } else if("equip".equals(answer[0])) {
+            boolean blacksmithAvailable = false;
+            for(Building building : map) {
+                if(!building.turnTaken && building instanceof BlackSmith) {
+                    if () {
 
+                    }
+                }
+            }
         }
     }
 }
