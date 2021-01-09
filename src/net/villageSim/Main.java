@@ -24,19 +24,23 @@ public class Main {
         world.theShire.arrive(jeff);
         world.theShire.arrive(bob);
 
-        for(int i = 0; i < world.theShire.people.size(); i ++) {
-            if(!world.theShire.people.get(i).turnTaken) {
-                askPlayer(world.theShire.people.get(i).name);
-            }
-        }
-
-//        theShire.getsRaided(10);
-
         world.theShire.print();
+        boolean done = false;
+        while(!done) {
+            for (int i = 0; i < world.theShire.people.size(); i++) {
+                if (!world.theShire.people.get(i).turnTaken) {
+                    done = askPlayer(world.theShire.people.get(i).name);
+                }
+            }
+
+            //        theShire.getsRaided(10);
+
+            world.theShire.print();
+        }
 
     }
 
-    private static void askPlayer(String name) {
+    private static boolean askPlayer(String name) {
         Scanner input = new Scanner(System.in);
 
         System.out.println("what would you like " + name + " to do?");
@@ -44,7 +48,9 @@ public class Main {
 
         List<Building> map = World.getInstance().theShire.map;
 
-        if("build".equals(answer[0])) {
+        if("done".equals(answer[0])) {
+            return true;
+        } else if("build".equals(answer[0])) {
             if("house".equals(answer[1])) {
                 map.add(new House("house" + map.size(), new ArrayList<>()));
             } else if("blacksmith".equals(answer[1])) {
@@ -62,41 +68,45 @@ public class Main {
 
             if(!blackSmithAvailable) {
                 System.out.println("you have no available blacksmiths");
+                askPlayer(name);
             } else if("sword".equals(answer[2])) {
                 Village theShire = World.getInstance().theShire;
                 for(int i = 0; i < theShire.people.size(); i ++) {
-                    if(theShire.people.get(i).name.equals(name)) {
+                    if(theShire.people.get(i).name.equals(answer[1])) {
                         if(!theShire.people.get(i).hasSword) {
                             theShire.people.get(i).hasSword = true;
-                            for(int i = 0; i < map.size(); i ++) {
-                                if(!map.get(i).turnTaken && map.get(i) instanceof BlackSmith) {
-                                    map.get(i).turnTaken = true;
+                            for(int j = 0; j < map.size(); j ++) {
+                                if(!map.get(j).turnTaken && map.get(j) instanceof BlackSmith) {
+                                    map.get(j).turnTaken = true;
                                     break;
                                 }
                             }
                         } else {
-                            System.out.println(name + " already has a sword");
+                            System.out.println(answer[1] + " already has a sword");
+                            askPlayer(name);
                         }
                     }
                 }
             } else if("shield".equals(answer[2])) {
                 Village theShire = World.getInstance().theShire;
                 for(int i = 0; i < theShire.people.size(); i ++) {
-                    if(theShire.people.get(i).name.equals(name)) {
+                    if(theShire.people.get(i).name.equals(answer[1])) {
                         if(!theShire.people.get(i).hasShield) {
                             theShire.people.get(i).hasShield = true;
-                            for(int i = 0; i < map.size(); i ++) {
-                                if(!map.get(i).turnTaken && map.get(i) instanceof BlackSmith) {
-                                    map.get(i).turnTaken = true;
+                            for(int j = 0; j < map.size(); j ++) {
+                                if(!map.get(j).turnTaken && map.get(j) instanceof BlackSmith) {
+                                    map.get(j).turnTaken = true;
                                     break;
                                 }
                             }
                         } else {
-                            System.out.println(name + " already has a shield");
+                            System.out.println(answer[1] + " already has a shield");
+                            askPlayer(name);
                         }
                     }
                 }
             }
         }
+        return false;
     }
 }

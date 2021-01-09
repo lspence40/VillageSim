@@ -19,6 +19,12 @@ public class Person {
 
     public void print() {
         System.out.print(name + " has " + health + " health");
+        if(hasSword) {
+            System.out.print(" and a sword");
+        }
+        if(hasShield) {
+            System.out.print(" and a shield");
+        }
         if(isDead) {
             System.out.println(" and is dead.");
         } else {
